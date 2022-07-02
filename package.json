@@ -1,0 +1,26 @@
+{
+  "name": "@disneyjs/bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsnd --respawn test.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/socket.io-client": "^3.0.0",
+    "discord.js": "^13.8.1",
+    "socket.io-client": "^4.5.1",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}
