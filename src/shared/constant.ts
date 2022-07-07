@@ -1,4 +1,3 @@
-
-export enum ServiceName{
-    MESSAGE = "message",
+export enum SocketNamespace {
+  MESSAGE = "message",
 }

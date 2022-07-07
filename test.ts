@@ -1,14 +1,20 @@
 import { Client } from "./src";
 
-const client = new Client();
 
-client.login("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI4ZWI0MjgyZS04MjBlLTQxZmQtOGI3Zi1lNDYyNmY1YjY3YTEiLCJpYXQiOjE2NTY2Nzc4NjAsImV4cCI6MTY1Njc2NDI2MH0.oaqBygXZBat6Hl5aQP5QuWb66YezOM6DCoV3h8ZrbT0");
+class DatabaseClient extends Client {
+    update() {
+        console.log(this.msgWorker.guild)
+    }
 
-const { MessageService } = client
+    find() {
+        console.log(this.msgWorker.message)
+    }
+}
 
-MessageService.onCreate((newMessage) => {
-  if (newMessage.data.content?.startsWith('.')) {
-    newMessage.send({content:`Hello ${newMessage.data.author?.memberId}`})
 
-  }
-});
+const client = new DatabaseClient();
+
+client.login(
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6IjUxMDFhYjIwLTVlNTEtNGYxNi1hMTgyLTg0YzhjMmI4ZTU5ZSIsImlhdCI6MTY1NzE2NTc3MX0.QzweoN6o0QZNJPL6myzh5AP2Dd20uy6eXZ1dqCMcukE"
+);
+

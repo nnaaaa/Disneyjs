@@ -1,44 +1,35 @@
-import { Manager, Socket } from "socket.io-client";
-import { MessageEntity } from "../../entities/message.entity";
-import { ServiceName } from "../../shared/constant";
-import { MessageSocketEvent } from "../../shared/socket/event";
+import { Client } from "..";
+import { SocketNamespace } from "../../shared/constant";
+import { GuildEntity } from "../../shared/entities/guild.entity";
+import { MessageEntity } from "../../shared/entities/message.entity";
 import { Service } from "./interface";
+import { MessageWorker } from "./message.worker";
 
 
-export class MessageWorker{
-    constructor(private _connection: Socket,private _message: Partial<MessageEntity>) {
-
-    }
-
-    send(message: Partial<Pick<MessageEntity, 'content' | 'images'>>) {
-        console.log(message)
-        this._connection.emit(MessageSocketEvent.CREATE, { message, channel: this._message.channel,member: this._message.author });
-    }
-
-    public get data(){return this._message}
-}
 
 
 export class MessageService extends Service {
-
-    constructor(gateway: Manager) {
-        super(gateway, ServiceName.MESSAGE);
-
+    private _route!: string
+    constructor(client: Client) {
+        super(client, SocketNamespace.MESSAGE);
+        this._route = `${client.Bot.botId}/message`
     }
 
     onCreate(callback: (worker: MessageWorker) => void): void {
-        this.connection.on("create", (message: MessageEntity) => callback(new MessageWorker(this.connection, message)));
+        this.connection.on(`${this._route}/create`, (message: MessageEntity, guild: GuildEntity) =>
+            callback(new MessageWorker(this.connection, message, guild))
+        );
     }
 
     onUpdate(callback: (args: Partial<MessageEntity>) => void): void {
-        this.connection.on("update", callback);
+        this.connection.on(`${this._route}/update`, callback);
     }
 
     onDelete(callback: (id: string) => void): void {
-        this.connection.on("delete", callback);
+        this.connection.on(`${this._route}/delete`, callback);
     }
 
     send(message: MessageEntity): void {
-        this.connection.emit('create', message);
+        this.connection.emit("create", message);
     }
 }
