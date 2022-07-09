@@ -1,23 +1,23 @@
-import { BotEntity } from './bot.entity'
-import { MemberEntity } from './member.entity'
-import { UserBeFriendEntity } from './userBeFriend.entity'
+import { BotEntity } from "./bot.entity";
+import { MemberEntity } from "./member.entity";
+import { UserBeFriendEntity } from "./userBeFriend.entity";
 
 export interface UserEntity {
-    userId: string
+  userId: string;
 
-    account: string
+  account: string;
 
-    name: string
+  name: string;
 
-    avatarUrl: string
+  avatarUrl: string;
 
-    lastLogin: Date
+  lastLogin: Date;
 
-    isOnline: boolean
+  isOnline: boolean;
 
-    friends: UserBeFriendEntity[]
+  friends: UserBeFriendEntity[];
 
-    joinedGuilds: MemberEntity[]
+  joinedGuilds: MemberEntity[];
 
-    createdBots: BotEntity[]
+  createdBots: BotEntity[];
 }

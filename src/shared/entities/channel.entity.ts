@@ -1,21 +1,21 @@
-import { ChannelCategoryEntity } from './channelCategory.entity'
-import { MemberEntity } from './member.entity'
-import { MessageEntity } from './message.entity'
-import { RoleEntity } from './role.entity'
+import { ChannelCategoryEntity } from "./channelCategory.entity";
+import { MemberEntity } from "./member.entity";
+import { MessageEntity } from "./message.entity";
+import { RoleEntity } from "./role.entity";
 
 export interface ChannelEntity {
-    channelId: string
+  channelId: string;
 
-    name: string
+  name: string;
 
-    isPrivate: boolean
+  isPrivate: boolean;
 
-    /** @relationship */
-    messages: MessageEntity[]
+  /** @relationship */
+  messages: MessageEntity[];
 
-    members: MemberEntity[]
+  members: MemberEntity[];
 
-    category: ChannelCategoryEntity
+  category: ChannelCategoryEntity;
 
-    roles: RoleEntity[]
+  roles: RoleEntity[];
 }

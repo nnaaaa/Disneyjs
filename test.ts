@@ -1,20 +1,20 @@
-import { Client } from "./src";
-
+import { Client, MarkdownBuilder } from "./src";
 
 class DatabaseClient extends Client {
-    update() {
-        console.log(this.msgWorker.guild)
-    }
+  update() {}
 
-    find() {
-        console.log(this.msgWorker.message)
-    }
+  find(count: string, length: string) {
+    this.msgWorker.reply({
+      content: MarkdownBuilder.codeBlock(
+        `const count = ${count}` + "\n" + `const length = ${length}`,
+        "javascript"
+      ),
+    });
+  }
 }
-
 
 const client = new DatabaseClient();
 
 client.login(
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6IjUxMDFhYjIwLTVlNTEtNGYxNi1hMTgyLTg0YzhjMmI4ZTU5ZSIsImlhdCI6MTY1NzE2NTc3MX0.QzweoN6o0QZNJPL6myzh5AP2Dd20uy6eXZ1dqCMcukE"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6ImFjOTEyYzk5LTlhOWEtNDMzZS04ZWE4LWU1MmJhMDQ5MTA3ZCIsImlhdCI6MTY1NzMzMjk3NX0.MOIUY-R1uWKaPQY7VfelQRIoW6a2uFJ2uq9vJbLrlHw"
 );
-

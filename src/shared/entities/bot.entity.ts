@@ -1,26 +1,26 @@
-import { CommandEntity } from './command.entity'
-import { MemberEntity } from './member.entity'
-import { Permission } from './role.entity'
-import { UserEntity } from './user.entity'
+import { CommandEntity } from "./command.entity";
+import { MemberEntity } from "./member.entity";
+import { Permission } from "./role.entity";
+import { UserEntity } from "./user.entity";
 
 export interface BotEntity {
-    botId: string
+  botId: string;
 
-    name: string
+  name: string;
 
-    description: string
+  description: string;
 
-    avatarUrl: string
+  avatarUrl: string;
 
-    isListening: boolean
+  isListening: boolean;
 
-    author: UserEntity
+  author: UserEntity;
 
-    secretKey: string
+  secretKey: string;
 
-    joinedGuilds: MemberEntity[]
+  joinedGuilds: MemberEntity[];
 
-    commands: CommandEntity[]
+  commands: CommandEntity[];
 
-    requiredPermissions: Permission[]
+  requiredPermissions: Permission[];
 }

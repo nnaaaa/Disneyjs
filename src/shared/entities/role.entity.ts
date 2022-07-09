@@ -1,38 +1,38 @@
-import { ChannelEntity } from './channel.entity'
-import { GuildEntity } from './guild.entity'
-import { MemberEntity } from './member.entity'
+import { ChannelEntity } from "./channel.entity";
+import { GuildEntity } from "./guild.entity";
+import { MemberEntity } from "./member.entity";
 
 export type Permission =
-    | 'DELETE_GUILD'
-    | 'UPDATE_GUILD'
-    | 'DELETE_CHANNEL'
-    | 'UPDATE_CHANNEL'
-    | 'CREATE_CHANNEL'
-    | 'CREATE_ROLE'
-    | 'UPDATE_ROLE'
-    | 'DELETE_ROLE'
-    | 'CREATE_EMOJI'
-    | 'UPDATE_EMOJI'
-    | 'DELETE_EMOJI'
-    | 'CREATE_MESSAGE'
-    | 'UPDATE_MESSAGE'
-    | 'DELETE_MESSAGE'
-    | 'CUD_REACT'
+  | "DELETE_GUILD"
+  | "UPDATE_GUILD"
+  | "DELETE_CHANNEL"
+  | "UPDATE_CHANNEL"
+  | "CREATE_CHANNEL"
+  | "CREATE_ROLE"
+  | "UPDATE_ROLE"
+  | "DELETE_ROLE"
+  | "CREATE_EMOJI"
+  | "UPDATE_EMOJI"
+  | "DELETE_EMOJI"
+  | "CREATE_MESSAGE"
+  | "UPDATE_MESSAGE"
+  | "DELETE_MESSAGE"
+  | "CUD_REACT";
 
 export interface RoleEntity {
-    roleId: string
+  roleId: string;
 
-    name: string
+  name: string;
 
-    icon: string
+  icon: string;
 
-    color: string
+  color: string;
 
-    guild: GuildEntity
+  guild: GuildEntity;
 
-    members: MemberEntity[]
+  members: MemberEntity[];
 
-    channels: ChannelEntity[]
+  channels: ChannelEntity[];
 
-    permissions: Permission[]
+  permissions: Permission[];
 }

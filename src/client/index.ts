@@ -9,7 +9,7 @@ class Client {
   private _gateway!: Manager;
   private _messageService!: MessageService;
   private _bot!: BotEntity;
-  
+
   private _messageWorker!: MessageWorker;
 
   constructor() {}
@@ -22,9 +22,8 @@ class Client {
           await axios.get<BotEntity>(`${Config.SERVER_HOST}/bot`, {
             headers: { Authorization: `Bearer ${token}` },
           })
-          ).data;
-      }
-      catch {
+        ).data;
+      } catch {
         throw new Error("Token is invalid or expired");
       }
       this._gateway = new Manager(Config.SERVER_HOST, {
@@ -45,20 +44,20 @@ class Client {
 
       for (const command of this._bot.commands) {
         if (!(this as any)[command.name as any]) {
-          throw new Error(`${this._bot.name}.[${command.name}] command is not implemented`);
+          throw new Error(
+            `${this._bot.name}.[${command.name}] command is not implemented`
+          );
         }
       }
 
       this._messageService.onCreate((worker) => {
         this._bot.commands.forEach((command) => {
-          const commandName = worker.message.content?.split('.')?.[1]
-          if (commandName && command.name === commandName) {
+          if (worker.commandName && command.name === worker.commandName) {
             this._messageWorker = worker;
-            (this as any)[command.name as any]();
+            (this as any)[command.name as any](...worker.args);
           }
-        })
-      })
-
+        });
+      });
     } catch (e) {
       console.error(e);
     }
@@ -66,7 +65,8 @@ class Client {
 
   public get msgService() {
     if (!this._accessToken) throw new Error("Token is required");
-    if (!this._messageService) throw new Error("Message Service is not initialized");
+    if (!this._messageService)
+      throw new Error("Message Service is not initialized");
     return this._messageService;
   }
 
@@ -85,11 +85,12 @@ class Client {
   }
 
   public get onCreateMessage() {
-    return this.msgService.onCreate
+    return this.msgService.onCreate;
   }
 
   public get msgWorker() {
-    if (!this._messageWorker) throw new Error("Worker is not initialized because no event listened"); 
+    if (!this._messageWorker)
+      throw new Error("Worker is not initialized because no event listened");
 
     return this._messageWorker;
   }

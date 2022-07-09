@@ -1,11 +1,13 @@
-import { BotEntity } from './bot.entity'
+import { BotEntity } from "./bot.entity";
 
 export interface CommandEntity {
-    commandId: string
+  commandId: string;
 
-    name: string
+  name: string;
 
-    description: string
+  description: string;
 
-    bot: BotEntity
+  bot: BotEntity;
+
+  args: string[];
 }

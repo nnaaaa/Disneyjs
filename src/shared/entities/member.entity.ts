@@ -1,31 +1,31 @@
-import { BotEntity } from './bot.entity'
-import { ChannelEntity } from './channel.entity'
-import { GuildEntity } from './guild.entity'
-import { MessageEntity } from './message.entity'
-import { ReactEntity } from './react.entity'
-import { RoleEntity } from './role.entity'
-import { UserEntity } from './user.entity'
+import { BotEntity } from "./bot.entity";
+import { ChannelEntity } from "./channel.entity";
+import { GuildEntity } from "./guild.entity";
+import { MessageEntity } from "./message.entity";
+import { ReactEntity } from "./react.entity";
+import { RoleEntity } from "./role.entity";
+import { UserEntity } from "./user.entity";
 
 export interface MemberEntity {
-    memberId: string
+  memberId: string;
 
-    joinAt: Date
+  joinAt: Date;
 
-    nickname: string
+  nickname: string;
 
-    avatarUrl: string
+  avatarUrl: string;
 
-    user?: UserEntity
+  user?: UserEntity;
 
-    bot?: BotEntity
+  bot?: BotEntity;
 
-    guild: GuildEntity
+  guild: GuildEntity;
 
-    roles: RoleEntity[]
+  roles: RoleEntity[];
 
-    joinedChannels: ChannelEntity[]
+  joinedChannels: ChannelEntity[];
 
-    sentMessages: MessageEntity[]
+  sentMessages: MessageEntity[];
 
-    sentReacts: ReactEntity[]
+  sentReacts: ReactEntity[];
 }

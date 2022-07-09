@@ -1,20 +1,20 @@
-import { ChannelCategoryEntity } from './channelCategory.entity'
-import { EmojiEntity } from './emoji.entity'
-import { MemberEntity } from './member.entity'
-import { RoleEntity } from './role.entity'
+import { ChannelCategoryEntity } from "./channelCategory.entity";
+import { EmojiEntity } from "./emoji.entity";
+import { MemberEntity } from "./member.entity";
+import { RoleEntity } from "./role.entity";
 
 export interface GuildEntity {
-    guildId: string
+  guildId: string;
 
-    name: string
+  name: string;
 
-    avatarUrl: string
+  avatarUrl: string;
 
-    members: MemberEntity[]
+  members: MemberEntity[];
 
-    roles: RoleEntity[]
+  roles: RoleEntity[];
 
-    emojis: EmojiEntity[]
+  emojis: EmojiEntity[];
 
-    categories: ChannelCategoryEntity[]
+  categories: ChannelCategoryEntity[];
 }
