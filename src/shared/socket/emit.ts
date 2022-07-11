@@ -29,21 +29,19 @@ export enum ChannelSocketEmit {
   UPDATE = "update",
   DELETE = "delete",
 
-  USER_JOIN = "join",
-  USER_LEAVE = "leave",
-  USER_UPDATE = "memberUpdate",
-  USER_ONLINE = "online",
-
-  ADD_ROLE = "addRole",
-  REMOVE_ROLE = "removeRole",
-  // ADD_MEMBER = 'addMember',
-  // REMOVE_MEMBER = 'removeMember',
+  ADD_MEMBER = "addMember",
+  REMOVE_MEMBER = "removeMember",
 }
 
 export enum RoleSocketEmit {
   CREATE = "create",
   UPDATE = "update",
   DELETE = "delete",
+
+  ADD_TO_MEMBER = "addToMember",
+  REMOVE_FROM_MEMBER = "removeFromMember",
+  ADD_TO_CHANNEL = "addToChannel",
+  REMOVE_FROM_CHANNEL = "removeFromChannel",
 }
 
 export enum MessageSocketEmit {

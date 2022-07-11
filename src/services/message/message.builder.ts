@@ -1,3 +1,5 @@
+import { stripIndent } from "common-tags";
+
 export class MarkdownBuilder {
   static bold(text: string): string {
     return `**${text}**`;
@@ -22,6 +24,9 @@ export class MarkdownBuilder {
   }
   static inlineCode(text: string): string {
     return `\`${text}\``;
+  }
+  static get codeTag() {
+    return stripIndent;
   }
   static link(text: string, url: string): string {
     return `[${text}](${url})`;

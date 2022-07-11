@@ -15,9 +15,11 @@ export enum GuildSocketEvent {
 }
 
 export enum MemberSocketEvent {
+  GET_JOINED = "getJoined",
   ONLINE = "online",
   UPDATE = "update",
-  JOIN = "join",
+  USER_JOIN = "userJoin",
+  BOT_JOIN = "botJoin",
   LEAVE = "leave",
 }
 
@@ -31,16 +33,16 @@ export enum ChannelSocketEvent {
   CREATE = "create",
   UPDATE = "update",
   DELETE = "delete",
-  // JOIN_CHANNEL = 'joinChannel',
-  // LEAVE_CHANNEL = 'leaveChannel',
-  // MEMBER_UPDATE = 'memberUpdate',
-  // ONLINE = 'online',
+
+  ADD_MEMBER = "addMember",
+  REMOVE_MEMBER = "removeMember",
 }
 
 export enum RoleSocketEvent {
   CREATE = "create",
   UPDATE = "update",
   DELETE = "delete",
+
   ADD_TO_MEMBER = "addToMember",
   REMOVE_FROM_MEMBER = "removeFromMember",
   ADD_TO_CHANNEL = "addToChannel",
@@ -48,6 +50,7 @@ export enum RoleSocketEvent {
 }
 
 export enum MessageSocketEvent {
+  FIND = "find",
   CREATE = "create",
   UPDATE = "update",
   DELETE = "delete",
@@ -64,3 +67,6 @@ export enum ReactSocketEvent {
   UPDATE = "update",
   DELETE = "delete",
 }
+
+// export enum BotSocketEvent{
+// }
