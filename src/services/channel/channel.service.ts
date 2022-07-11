@@ -25,10 +25,10 @@ export class ChannelService extends Service {
 
   public send(message: BotInputMessage, channel?: ChannelEntity) {
     const existChannel = this.worker.guild.categories
-      .map((c) => c.channels)
+      .map(c => c.channels)
       .flat()
       .find(
-        (c) =>
+        c =>
           c.name.toLowerCase() === channel?.name.toLowerCase() ||
           c.channelId === channel?.channelId
       );
@@ -45,10 +45,10 @@ export class ChannelService extends Service {
 
   public withIdOrName(channelNameOrId: string) {
     const existChannel = this.worker.guild.categories
-      .map((c) => c.channels)
+      .map(c => c.channels)
       .flat()
       .find(
-        (c) =>
+        c =>
           c.name.toLowerCase() === channelNameOrId.toLowerCase() ||
           c.channelId === channelNameOrId
       );
@@ -102,7 +102,7 @@ export class ChannelService extends Service {
 
   public inCategory(categoryNameOrId: string) {
     const category = this.worker.guild.categories.find(
-      (c) =>
+      c =>
         c.name.toLowerCase() === categoryNameOrId.toLowerCase() ||
         c.categoryId === categoryNameOrId
     );
@@ -129,7 +129,7 @@ export class ChannelService extends Service {
     memberNicknameOrId: string
   ) {
     const existMember = this.worker.guild.members.find(
-      (m) =>
+      m =>
         m.nickname.toLowerCase() === memberNicknameOrId.toLowerCase() ||
         m.memberId === memberNicknameOrId
     );
@@ -150,7 +150,7 @@ export class ChannelService extends Service {
     roleNameOrId: string
   ) {
     const existRole = this.worker.guild.roles.find(
-      (r) =>
+      r =>
         r.name.toLowerCase() === roleNameOrId.toLowerCase() ||
         r.roleId === roleNameOrId
     );

@@ -24,7 +24,7 @@ export class MessageService extends Service {
         guild: GuildEntity
       ) => {
         const member = this._client.bot.joinedGuilds.find(
-          (g) => g.guild.guildId === guild.guildId
+          g => g.guild.guildId === guild.guildId
         );
 
         if (!member) {
