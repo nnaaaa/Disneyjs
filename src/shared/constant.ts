@@ -1,5 +1,5 @@
 export enum SocketNamespace {
-  MESSAGE = "message",
-  CHANNEL = "channel",
-  ROLE = "role",
+  MESSAGE = 'message',
+  CHANNEL = 'channel',
+  ROLE = 'role',
 }

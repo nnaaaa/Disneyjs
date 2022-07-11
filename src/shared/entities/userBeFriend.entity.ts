@@ -1,9 +1,9 @@
-import { UserEntity } from "./user.entity";
+import { UserEntity } from './user.entity';
 
 export enum FriendStatus {
-  ACCEPTED = "accepted",
-  PENDING = "pending",
-  BLOCKED = "blocked",
+  ACCEPTED = 'accepted',
+  PENDING = 'pending',
+  BLOCKED = 'blocked',
 }
 
 export interface UserBeFriendEntity {

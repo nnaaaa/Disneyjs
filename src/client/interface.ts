@@ -1,9 +1,9 @@
-import axios from "axios";
-import { Manager } from "socket.io-client";
-import { Config } from "../shared";
-import { BotEntity } from "../shared/entities/bot.entity";
-import { Connection } from "./connection";
-import { MessageService, ChannelService } from "../services";
+import axios from 'axios';
+import { Manager } from 'socket.io-client';
+import { Config } from '../shared';
+import { BotEntity } from '../shared/entities/bot.entity';
+import { Connection } from './connection';
+import { MessageService, ChannelService } from '../services';
 
 export abstract class Client {
   private _connection!: Connection;
@@ -26,7 +26,7 @@ export abstract class Client {
           })
         ).data;
       } catch {
-        throw new Error("Token is invalid or expired");
+        throw new Error('Token is invalid or expired');
       }
 
       this._gateway = new Manager(Config.SERVER_HOST, {
@@ -41,7 +41,7 @@ export abstract class Client {
 
       this._messageService = new MessageService(this, this._connection.message);
       this._channalService = new ChannelService(this, this._connection);
-      console.log("💖 Login successfully");
+      console.log('💖 Login successfully');
 
       //validate commands which user created to bot manager
       for (const command of this._bot.commands) {
@@ -59,21 +59,21 @@ export abstract class Client {
   /**@return message received: MessageEntity */
   public get message() {
     if (!this._messageService)
-      throw new Error("Message Service is not initialized");
+      throw new Error('Message Service is not initialized');
     return this._messageService;
   }
 
   /**@return channel which received message: ChannelEntity */
   public get channel() {
     if (!this._channalService)
-      throw new Error("Channel Service is not initialized");
+      throw new Error('Channel Service is not initialized');
 
     return this._channalService;
   }
 
   /**@return currentBot: BotEntity */
   public get bot() {
-    if (!this._bot) throw new Error("Bot is not identified");
+    if (!this._bot) throw new Error('Bot is not identified');
 
     return this._bot;
   }

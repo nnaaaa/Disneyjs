@@ -1,10 +1,10 @@
-import { BotEntity } from "./bot.entity";
-import { ChannelEntity } from "./channel.entity";
-import { GuildEntity } from "./guild.entity";
-import { MessageEntity } from "./message.entity";
-import { ReactEntity } from "./react.entity";
-import { RoleEntity } from "./role.entity";
-import { UserEntity } from "./user.entity";
+import { BotEntity } from './bot.entity';
+import { ChannelEntity } from './channel.entity';
+import { GuildEntity } from './guild.entity';
+import { MessageEntity } from './message.entity';
+import { ReactEntity } from './react.entity';
+import { RoleEntity } from './role.entity';
+import { UserEntity } from './user.entity';
 
 export interface MemberEntity {
   memberId: string;

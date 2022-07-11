@@ -1,5 +1,5 @@
-import { Manager, Socket } from "socket.io-client";
-import { SocketNamespace } from "../shared/constant";
+import { Manager, Socket } from 'socket.io-client';
+import { SocketNamespace } from '../shared/constant';
 
 export class Connection {
   readonly message!: Socket;

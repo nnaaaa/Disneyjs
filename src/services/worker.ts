@@ -1,6 +1,6 @@
-import { Socket } from "socket.io-client";
-import { GuildEntity } from "../shared/entities/guild.entity";
-import { MemberEntity } from "../shared/entities/member.entity";
+import { Socket } from 'socket.io-client';
+import { GuildEntity } from '../shared/entities/guild.entity';
+import { MemberEntity } from '../shared/entities/member.entity';
 
 export class Worker {
   constructor(

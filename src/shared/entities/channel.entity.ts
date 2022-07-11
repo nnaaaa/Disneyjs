@@ -1,7 +1,7 @@
-import { ChannelCategoryEntity } from "./channelCategory.entity";
-import { MemberEntity } from "./member.entity";
-import { MessageEntity } from "./message.entity";
-import { RoleEntity } from "./role.entity";
+import { ChannelCategoryEntity } from './channelCategory.entity';
+import { MemberEntity } from './member.entity';
+import { MessageEntity } from './message.entity';
+import { RoleEntity } from './role.entity';
 
 export interface ChannelEntity {
   channelId: string;

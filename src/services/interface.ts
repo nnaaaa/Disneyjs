@@ -1,4 +1,4 @@
-import { Worker } from "./worker";
+import { Worker } from './worker';
 
 export abstract class Service {
   protected _route!: string;
@@ -12,7 +12,7 @@ export abstract class Service {
   }
 
   protected get worker() {
-    if (!this._worker) throw new Error("Worker is not initialized");
+    if (!this._worker) throw new Error('Worker is not initialized');
     return this._worker;
   }
 }

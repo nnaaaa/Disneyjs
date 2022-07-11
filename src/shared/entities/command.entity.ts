@@ -1,4 +1,4 @@
-import { BotEntity } from "./bot.entity";
+import { BotEntity } from './bot.entity';
 
 export interface CommandEntity {
   commandId: string;

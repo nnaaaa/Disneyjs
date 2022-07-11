@@ -1,10 +1,10 @@
-import { Client } from "../../client/interface";
-import { GuildEntity, MessageEntity } from "../../shared/entities";
-import { MessageSocketEvent } from "../../shared/socket/event";
-import { Worker } from "../worker";
-import { Service } from "../interface";
-import { InspectedCommand, BotInputMessage } from "./message.dto";
-import { Socket } from "socket.io-client";
+import { Client } from '../../client/interface';
+import { GuildEntity, MessageEntity } from '../../shared/entities';
+import { MessageSocketEvent } from '../../shared/socket/event';
+import { Worker } from '../worker';
+import { Service } from '../interface';
+import { InspectedCommand, BotInputMessage } from './message.dto';
+import { Socket } from 'socket.io-client';
 
 export class MessageService extends Service {
   private _message!: MessageEntity;
@@ -28,7 +28,7 @@ export class MessageService extends Service {
         );
 
         if (!member) {
-          throw new Error("Bot is not in this guild");
+          throw new Error('Bot is not in this guild');
         }
 
         this._inspectedCommand = inspectedCommand;
@@ -70,7 +70,7 @@ export class MessageService extends Service {
     });
   }
   public get data() {
-    if (!this._message) throw new Error("Message is not initialized");
+    if (!this._message) throw new Error('Message is not initialized');
     return this._message;
   }
 

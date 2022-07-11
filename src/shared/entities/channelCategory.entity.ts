@@ -1,5 +1,5 @@
-import { ChannelEntity } from "./channel.entity";
-import { GuildEntity } from "./guild.entity";
+import { ChannelEntity } from './channel.entity';
+import { GuildEntity } from './guild.entity';
 
 export interface ChannelCategoryEntity {
   categoryId: string;

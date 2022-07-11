@@ -1,14 +1,14 @@
-import { Connection } from "../../client";
-import { Client } from "../../client/interface";
-import { ChannelEntity } from "../../shared/entities";
+import { Connection } from '../../client';
+import { Client } from '../../client/interface';
+import { ChannelEntity } from '../../shared/entities';
 import {
   ChannelSocketEvent,
   MessageSocketEvent,
-  RoleSocketEvent
-} from "../../shared/socket/event";
-import { Service } from "../interface";
-import { BotInputMessage } from "../message/message.dto";
-import { BotInputChannel } from "./channel.dto";
+  RoleSocketEvent,
+} from '../../shared/socket/event';
+import { Service } from '../interface';
+import { BotInputMessage } from '../message/message.dto';
+import { BotInputChannel } from './channel.dto';
 
 export class ChannelService extends Service {
   private _channel!: ChannelEntity;
@@ -19,7 +19,7 @@ export class ChannelService extends Service {
   }
 
   public get data() {
-    if (!this._channel) throw new Error("Channel is not initialized");
+    if (!this._channel) throw new Error('Channel is not initialized');
     return this._channel;
   }
 
@@ -33,7 +33,7 @@ export class ChannelService extends Service {
           c.channelId === channel?.channelId
       );
     if (!existChannel) {
-      throw new Error("Channel not found");
+      throw new Error('Channel not found');
     }
     this._connection.message.emit(MessageSocketEvent.CREATE, {
       message,
@@ -54,7 +54,7 @@ export class ChannelService extends Service {
       );
 
     if (!existChannel) {
-      throw new Error("Channel not found");
+      throw new Error('Channel not found');
     }
 
     return {
@@ -108,12 +108,12 @@ export class ChannelService extends Service {
     );
 
     if (!category) {
-      throw new Error("Category not found");
+      throw new Error('Category not found');
     }
 
     return {
       create: (channel: BotInputChannel) => {
-        this._connection.channel.emit("create", {
+        this._connection.channel.emit('create', {
           channel,
           category,
           firstMember: this.worker.botMember,
@@ -135,7 +135,7 @@ export class ChannelService extends Service {
     );
 
     if (!existMember) {
-      throw new Error("Member not found");
+      throw new Error('Member not found');
     }
 
     this._connection.channel.emit(event, {
@@ -156,7 +156,7 @@ export class ChannelService extends Service {
     );
 
     if (!existRole) {
-      throw new Error("Role not found");
+      throw new Error('Role not found');
     }
 
     this._connection.role.emit(event, {

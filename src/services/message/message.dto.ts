@@ -1,4 +1,4 @@
-import { MessageEntity } from "../../shared/entities";
+import { MessageEntity } from '../../shared/entities';
 
 export interface InspectedCommand {
   botName: string;
@@ -7,5 +7,5 @@ export interface InspectedCommand {
 }
 
 export type BotInputMessage = Partial<
-  Pick<MessageEntity, "content" | "images">
+  Pick<MessageEntity, 'content' | 'images'>
 >;

@@ -1,5 +1,5 @@
-import { ChannelEntity } from "../../shared/entities";
+import { ChannelEntity } from '../../shared/entities';
 
 export type BotInputChannel = Partial<
-  Pick<ChannelEntity, "name" | "isPrivate">
+  Pick<ChannelEntity, 'name' | 'isPrivate'>
 >;

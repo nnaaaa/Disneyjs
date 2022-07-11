@@ -1,4 +1,4 @@
-import { Client } from "./interface";
+import { Client } from './interface';
 
 export class MessageClient extends Client {
   async login(token: string) {
