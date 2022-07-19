@@ -9,7 +9,7 @@ export class MessageClient extends Client {
       this.channel.setWorker(worker);
       this.channel.setChannel(this.message.data.channel);
 
-      this.bot.commands.forEach(command => {
+      this.bot.info.commands.forEach(command => {
         const { name, args } = this.message.command;
         if (
           name &&

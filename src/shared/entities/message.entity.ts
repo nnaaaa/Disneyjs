@@ -1,6 +1,6 @@
+import { ActionEntity } from './action.entity';
 import { ChannelEntity } from './channel.entity';
 import { MemberEntity } from './member.entity';
-import { ReactEntity } from './react.entity';
 
 export interface MessageEntity {
   messageId: string;
@@ -15,7 +15,7 @@ export interface MessageEntity {
 
   author: MemberEntity;
 
-  reacts: ReactEntity[];
+  action: Partial<ActionEntity>;
 
   replyTo: MessageEntity;
 }

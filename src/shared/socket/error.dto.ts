@@ -1,3 +1,3 @@
-export class SocketErrorDto {
+export interface SocketErrorDto {
   error: string;
 }

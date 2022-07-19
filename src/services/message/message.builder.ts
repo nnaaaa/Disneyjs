@@ -25,7 +25,7 @@ export class MarkdownBuilder {
   static inlineCode(text: string): string {
     return `\`${text}\``;
   }
-  static get codeTag() {
+  static get tag() {
     return stripIndent;
   }
   static link(text: string, url: string): string {

@@ -68,5 +68,3 @@ export enum ReactSocketEvent {
   DELETE = 'delete',
 }
 
-// export enum BotSocketEvent{
-// }

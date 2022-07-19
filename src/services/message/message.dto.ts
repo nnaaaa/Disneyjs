@@ -1,4 +1,5 @@
 import { MessageEntity } from '../../shared/entities';
+import { MessageAction } from './action.service';
 
 export interface InspectedCommand {
   botName: string;
@@ -8,4 +9,6 @@ export interface InspectedCommand {
 
 export type BotInputMessage = Partial<
   Pick<MessageEntity, 'content' | 'images'>
->;
+  > & {
+    action?: MessageAction
+};

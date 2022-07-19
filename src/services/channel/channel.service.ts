@@ -15,7 +15,7 @@ export class ChannelService extends Service {
 
   constructor(_client: Client, private _connection: Connection) {
     super();
-    this._route = `${_client.bot.botId}/message`;
+    this._route = `${_client.bot.info.botId}/message`;
   }
 
   public get data() {
