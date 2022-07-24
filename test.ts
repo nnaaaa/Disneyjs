@@ -1,51 +1,36 @@
 
-// import axios from 'axios';
-// import { MarkdownBuilder, MessageAction, MessageButton, MessageClient } from './src';
 
-// const key = '589f71e9a8e3406d99034020221207';
+import { Deck } from "./blackjack/deck";
+import { GameState } from "./blackjack/state";
+import { MessageClient } from "./src";
 
-// class WeatherClient extends MessageClient {
-//   async getToday() {
-//     const countries = ['Vietnam', 'Japan', 'China', 'Korea', 'Thailand', 'Singapore', 'Australia'];
-//     const action = new MessageAction()
-//     countries.forEach(c => action.addButton(new MessageButton().setName(c)))
 
-//     const message = await this.message.send({ content: '1234', action })
+class Blackjack extends MessageClient{
+    async bet(bet: number) {
+        console.log(bet)
+        const gameState = new GameState(
+            this.message.data.author,
+            new Deck(),
+        )
+        const message = await this.message.send(gameState.getMessage())
 
-//     action.onButtonClick(async (button) => {
-//       for (const country of countries) {
-//         if (button.name === country) {
-//           const res = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${key}&q=${country}&days=7`)
-//           const getIcon = () => {
-//             switch (res.data.current.condition.text) {
-//               case 'Sunny':
-//                 return '☀️';
-//               case 'Cloudy':
-//                 return '☁️';
-//               case 'Rain':
-//                 return '🌧';
-//               case 'Snow':
-//                 return '🌨';
-//               case 'Thunderstorm':
-//                 return '⛈';
-//               case 'Mist':
-//                 return '🌫';
-//               default:
-//                 return '🌧';
-//             }
-//           }
-//           message.edit({
-//             content: MarkdownBuilder.tag`
-//               ### ${res.data.location.name} ${getIcon()}
-//               Current temperature is ${res.data.current.temp_c}°C
-//             `,
-//           })
-//         }
-//       }
-//     })
-//   }
-// }
+        gameState.action.onButtonClick(async (button) => {
+            if (button.customId === 'hit') {
+                gameState.hit()
+            }
+            if (button.customId === 'stand') {
+                gameState.stand()
+            }
 
-// const client = new WeatherClient();
+            message.edit(gameState.getMessage())
+            if (gameState.isOver()) {
+                console.log("game over")
+            }
+        })
+    }
+}
 
-// client.login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6ImZhY2NjZmZjLThkMDUtNDA5MC1hMWNmLTM3OWQ5ODM4OWM0YiIsImlhdCI6MTY1ODIwMTk4Mn0.gRyBAj3MmvIBoNQFk5XJrD0kcFGfjgtJIFMYu2dEE3Q');
+const client = new Blackjack()
+
+client.login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6Ijg4MjQwZTA2LWMyYzMtNDY4ZS04MGI4LTZiNmMxYjk5YmI4OCIsImlhdCI6MTY1ODMyMDE0OH0.KBc0W91UxsHGfQhzwJplIZ3dAL_YQm7DKgdXi3fca-Q');
+

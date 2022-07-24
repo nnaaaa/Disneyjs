@@ -1,4 +1,6 @@
 export * from './bot.entity';
+export * from './button.entity';
+export * from './action.entity';
 export * from './channel.entity';
 export * from './guild.entity';
 export * from './member.entity';

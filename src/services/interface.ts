@@ -15,4 +15,9 @@ export abstract class Service {
     if (!this._worker) throw new Error('Worker is not initialized');
     return this._worker;
   }
+
+  public get guild() {
+    if (!this._worker) throw new Error('Worker is not initialized');
+    return this.worker.guild;
+  }
 }

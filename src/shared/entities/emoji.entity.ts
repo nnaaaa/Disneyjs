@@ -6,6 +6,8 @@ export interface EmojiEntity {
 
   imageUrl: string;
 
+  name: string;
+
   guild: GuildEntity;
 
   reacts: ReactEntity[];

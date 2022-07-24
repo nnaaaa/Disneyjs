@@ -63,7 +63,7 @@ export class MessageService extends Service {
       }, (m: MessageEntity) => resolve(m));
     })
 
-    if (m.action.actionId && message.action) {
+    if (m.action?.actionId && message.action) {
       message.action
         .setId(m.action.actionId)
         .setConnection(this._connection);
@@ -80,6 +80,7 @@ export class MessageService extends Service {
       this._connection.message.emit(MessageSocketEvent.UPDATE, {
         message: {
           ...message,
+          action:message.action?.getData(),
           messageId: this._message.messageId,
         },
         memberId: this.worker.botMember.memberId,

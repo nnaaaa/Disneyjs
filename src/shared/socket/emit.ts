@@ -63,9 +63,9 @@ export enum ReactSocketEmit {
 }
 
 export enum ButtonSocketEmit {
-  CREATE = 'create',
-  UPDATE = 'update',
-  DELETE = 'delete',
   CLICK = 'click',
 }
 
+export enum SelectSocketEmit{
+  SELECT = 'select'
+}
