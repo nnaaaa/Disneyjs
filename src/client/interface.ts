@@ -57,6 +57,10 @@ export abstract class Client {
     return this._messageService;
   }
 
+  public set message(messageService: MessageService) {
+    this._messageService = messageService;
+  }
+
   /**@return channel which received message: ChannelEntity */
   public get channel() {
     if (!this._channalService)

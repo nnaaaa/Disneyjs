@@ -2,18 +2,15 @@ import { Connection } from '../../client';
 import { Client } from '../../client/interface';
 import { ChannelEntity } from '../../shared/entities';
 import {
-  ChannelSocketEvent,
-  MessageSocketEvent,
-  RoleSocketEvent,
+  ChannelSocketEvent, RoleSocketEvent
 } from '../../shared/socket/event';
 import { Service } from '../interface';
-import { BotInputMessage } from '../message/message.dto';
 import { BotInputChannel } from './channel.dto';
 
 export class ChannelService extends Service {
   private _channel!: ChannelEntity;
 
-  constructor(_client: Client, private _connection: Connection) {
+  constructor(private _client: Client, private _connection: Connection) {
     super();
     this._route = `${_client.bot.info.botId}/message`;
   }
@@ -21,26 +18,6 @@ export class ChannelService extends Service {
   public get data() {
     if (!this._channel) throw new Error('Channel is not initialized');
     return this._channel;
-  }
-
-  public send(message: BotInputMessage, channel?: ChannelEntity) {
-    const existChannel = this.worker.guild.categories
-      .map(c => c.channels)
-      .flat()
-      .find(
-        c =>
-          c.name.toLowerCase() === channel?.name.toLowerCase() ||
-          c.channelId === channel?.channelId
-      );
-    if (!existChannel) {
-      throw new Error('Channel not found');
-    }
-    this._connection.message.emit(MessageSocketEvent.CREATE, {
-      message,
-      channel: existChannel ? existChannel : this._channel,
-      member: this.worker.botMember,
-      memberId: this.worker.botMember.memberId,
-    });
   }
 
   public withIdOrName(channelNameOrId: string) {
@@ -56,44 +33,43 @@ export class ChannelService extends Service {
     if (!existChannel) {
       throw new Error('Channel not found');
     }
-
-    return {
-      send: (message: BotInputMessage) => this.send(message, existChannel),
-      update: async (channel: BotInputChannel) => {
-        this._connection.channel.emit(ChannelSocketEvent.UPDATE, {
-          channel: { channelId: existChannel.channelId, ...channel },
-          memberId: this.worker.botMember.memberId,
-        });
-      },
-      addMember: async (memberNicknameOrId: string) => {
-        await this.updateMemberOfChannel(
-          ChannelSocketEvent.ADD_MEMBER,
-          existChannel.channelId,
-          memberNicknameOrId
-        );
-      },
-      removeMember: async (memberNicknameOrId: string) => {
-        await this.updateMemberOfChannel(
-          ChannelSocketEvent.REMOVE_MEMBER,
-          existChannel.channelId,
-          memberNicknameOrId
-        );
-      },
-      addRole: async (roleNameOrId: string) => {
-        await this.updateRoleOfChannel(
-          RoleSocketEvent.ADD_TO_CHANNEL,
-          existChannel.channelId,
-          roleNameOrId
-        );
-      },
-      removeRole: async (roleNameOrId: string) => {
-        await this.updateRoleOfChannel(
-          RoleSocketEvent.REMOVE_FROM_CHANNEL,
-          existChannel.channelId,
-          roleNameOrId
-        );
-      },
-    };
+    const newService = this.clone()
+    newService.setChannel(existChannel);
+    return newService
+  }
+  async update (channel: BotInputChannel) {
+    this._connection.channel.emit(ChannelSocketEvent.UPDATE, {
+      channel: { channelId: this._channel.channelId, ...channel },
+      memberId: this.worker.botMember.memberId,
+    });
+  }
+  async addMember (memberNicknameOrId: string) {
+    await this.updateMemberOfChannel(
+      ChannelSocketEvent.ADD_MEMBER,
+      this._channel.channelId,
+      memberNicknameOrId
+    );
+  }
+  async removeMember (memberNicknameOrId: string) {
+    await this.updateMemberOfChannel(
+      ChannelSocketEvent.REMOVE_MEMBER,
+      this._channel.channelId,
+      memberNicknameOrId
+    );
+  }
+  async addRole (roleNameOrId: string) {
+    await this.updateRoleOfChannel(
+      RoleSocketEvent.ADD_TO_CHANNEL,
+      this._channel.channelId,
+      roleNameOrId
+    );
+  }
+  async removeRole (roleNameOrId: string) {
+    await this.updateRoleOfChannel(
+      RoleSocketEvent.REMOVE_FROM_CHANNEL,
+      this._channel.channelId,
+      roleNameOrId
+    );
   }
 
   public setChannel(channel: ChannelEntity) {
@@ -121,6 +97,13 @@ export class ChannelService extends Service {
         });
       },
     };
+  }
+
+  clone() {
+    const newService = new ChannelService(this._client, this._connection);
+    newService.setChannel(this._channel);
+    newService.setWorker(this.worker);
+    return newService;
   }
 
   private async updateMemberOfChannel(

@@ -1,36 +1,30 @@
 
 
-import { Deck } from "./blackjack/deck";
-import { GameState } from "./blackjack/state";
-import { MessageClient } from "./src";
+import { ButtonStyle, MessageButton, MessageClient, MessageSelect, MessageSelectOption } from "./src";
 
 
-class Blackjack extends MessageClient{
-    async bet(bet: number) {
-        console.log(bet)
-        const gameState = new GameState(
-            this.message.data.author,
-            new Deck(),
-        )
-        const message = await this.message.send(gameState.getMessage())
+class TestClient extends MessageClient{
+    async ping() {
+        this.message.action
+            .addButton(new MessageButton().setName('ping'))
+            .addButton(new MessageButton().setName('pong').setStyle(ButtonStyle.SECONDARY))
+            .addSelect(new MessageSelect().addOptions([
+                new MessageSelectOption().setValue('ping'),
+                new MessageSelectOption().setValue('pong'),
+            ]))
+        const message = await this.message.send({ content: 'Ping to server' })
+        
+        message.action.onButtonClick(button => {
+            console.log(button)
+        })
 
-        gameState.action.onButtonClick(async (button) => {
-            if (button.customId === 'hit') {
-                gameState.hit()
-            }
-            if (button.customId === 'stand') {
-                gameState.stand()
-            }
-
-            message.edit(gameState.getMessage())
-            if (gameState.isOver()) {
-                console.log("game over")
-            }
+        message.action.onSelect(option => {
+            console.log(option)
         })
     }
 }
 
-const client = new Blackjack()
+const client = new TestClient()
 
-client.login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6Ijg4MjQwZTA2LWMyYzMtNDY4ZS04MGI4LTZiNmMxYjk5YmI4OCIsImlhdCI6MTY1ODMyMDE0OH0.KBc0W91UxsHGfQhzwJplIZ3dAL_YQm7DKgdXi3fca-Q');
+client.login('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJib3RJZCI6IjQ4MmZlNWEyLWVmMWYtNDUxMC1hZWI4LTY4MDE1MmU2N2E5MCIsImlhdCI6MTY1OTI3Nzg1Nn0.a5XlS9PFLtOdh9UsmUPWTWhWgZWdR0MKjCTYwmyWHB4');
 

@@ -15,7 +15,7 @@ export interface MessageEntity {
 
   author: MemberEntity;
 
-  action: Partial<ActionEntity>;
+  action: ActionEntity;
 
   replyTo: MessageEntity;
 }

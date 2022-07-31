@@ -1,3 +1,4 @@
+import { MessageAction } from '../services';
 import { Client } from './interface';
 
 export class MessageClient extends Client {
@@ -6,6 +7,8 @@ export class MessageClient extends Client {
 
     this.message.onCreate(({ worker }) => {
       this.message.setWorker(worker);
+      this.message.setAction(new MessageAction());
+
       this.channel.setWorker(worker);
       this.channel.setChannel(this.message.data.channel);
 

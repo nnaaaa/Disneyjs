@@ -82,26 +82,34 @@ export class MessageAction implements Partial<ActionEntity>{
     }
 
     onButtonClick(callback: (button: ButtonEntity) => void) {
+        this.checkId()
         this._connection.button.on(`${this._actionId}/${SocketNamespace.BUTTON}/${ButtonSocketEmit.CLICK}`, (button: ButtonEntity) => {
             callback(button)
         })
     }
 
     onReactCreate(callback: (react: ReactEntity) => void) {
+        this.checkId()
         this._connection.react.on(`${this._actionId}/${SocketNamespace.REACT}/${ReactSocketEmit.CREATE}`, (react: ReactEntity) => {
             callback(react)
         })
     }
 
     onReactDelete(callback: (react: ReactEntity) => void) {
+        this.checkId()
         this._connection.react.on(`${this._actionId}/${SocketNamespace.REACT}/${ReactSocketEmit.DELETE}`, (react: ReactEntity) => {
             callback(react)
         })
     }
 
     onSelect(callback: (option: OptionEntity) => void) {
+        this.checkId()
         this._connection.select.on(`${this._actionId}/${SocketNamespace.SELECT}/${SelectSocketEmit.SELECT}`, (option: OptionEntity) => {
             callback(option)
         })
+    }
+
+    private checkId() {
+        if (!this._actionId) throw new Error('Listener must be start in advance the message sent')
     }
 }

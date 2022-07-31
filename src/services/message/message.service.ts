@@ -1,19 +1,26 @@
 import { Connection } from '../../client';
 import { Client } from '../../client/interface';
-import { GuildEntity, MessageEntity } from '../../shared/entities';
+import { ActionEntity, GuildEntity, MessageEntity } from '../../shared/entities';
 import { MessageSocketEvent } from '../../shared/socket/event';
 import { SocketNamespace } from '../../shared/socket/namespace';
 import { Service } from '../interface';
 import { Worker } from '../worker';
+import { MessageAction } from './action.service';
 import { BotInputMessage, InspectedCommand } from './message.dto';
 
 export class MessageService extends Service {
   private _message!: MessageEntity;
+  private _action: MessageAction;
   private _inspectedCommand!: InspectedCommand;
 
-  constructor(private _client: Client, private _connection: Connection) {
+  constructor(private _client: Client, private _connection: Connection, initMessage?: MessageEntity) {
     super();
     this._route = `${_client.bot.info.botId}/${SocketNamespace.MESSAGE}`;
+    if (initMessage) {
+      this._message = initMessage
+    }
+
+    this._action = new MessageAction();
   }
 
 
@@ -53,26 +60,19 @@ export class MessageService extends Service {
     this._connection.message.on(`${this._route}/delete`, callback);
   }
 
+
   async send(message: BotInputMessage) {
     const m = await new Promise<MessageEntity>(resolve => {
       this._connection.message.emit(MessageSocketEvent.CREATE, {
-        message,
+        message:{...message, action:this._action.getData()},
         channel: this._message.channel,
         member: this.worker.botMember,
         memberId: this.worker.botMember.memberId,
       }, (m: MessageEntity) => resolve(m));
     })
+    this.updateAction(m.action)
 
-    if (m.action?.actionId && message.action) {
-      message.action
-        .setId(m.action.actionId)
-        .setConnection(this._connection);
-    }
-    const newService = new MessageService(this._client, this._connection);
-    newService.setWorker(this.worker);
-    newService._message = m;
-
-    return newService
+    return this.clone().setMessage(m)
   }
 
   async edit(message: BotInputMessage) {
@@ -86,22 +86,39 @@ export class MessageService extends Service {
         memberId: this.worker.botMember.memberId,
       }, (m: MessageEntity) => resolve(m));
     })
+    this.updateAction(m.action)
 
-    const newService = new MessageService(this._client, this._connection);
-    newService.setWorker(this.worker);
-    newService._message = m;
+    return this.clone().setMessage(m)
 
-    return newService
   }
 
-  reply(message: BotInputMessage) {
-    this._connection.message.emit(MessageSocketEvent.CREATE, {
-      message,
-      channel: this._message.channel,
-      member: this.worker.botMember,
-      replyTo: this._message.messageId,
-      memberId: this.worker.botMember.memberId,
-    });
+  public async reply(message: BotInputMessage) {
+    const m = await new Promise<MessageEntity>(resolve => {
+      this._connection.message.emit(MessageSocketEvent.CREATE, {
+        message: {
+          ...message,
+          action:message.action?.getData(),
+          messageId: this._message.messageId,
+        },
+        member: this.worker.botMember,
+        replyTo: this._message.messageId,
+        memberId: this.worker.botMember.memberId,
+      }, (m: MessageEntity) => resolve(m));
+    })
+    this.updateAction(m.action)
+
+    return this.clone().setMessage(m)
+  }
+
+  public setMessage(message: MessageEntity) {
+    this._message = message
+    return this
+  }
+  public setAction(action:MessageAction) {
+    this._action = action
+  }
+  public updateAction(action: ActionEntity) {
+    this._action.setId(action.actionId).setConnection(this._connection);
   }
   public get data() {
     if (!this._message) throw new Error('Message is not initialized');
@@ -110,5 +127,17 @@ export class MessageService extends Service {
 
   public get command() {
     return this._inspectedCommand;
+  }
+
+  public get action() {
+    return this._action
+  }
+
+  clone() {
+    const newService = new MessageService(this._client, this._connection);
+    newService.setWorker(this.worker);
+    newService.setMessage(this._message);
+    newService._action = this._action;
+    return newService
   }
 }
